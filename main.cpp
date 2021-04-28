@@ -362,6 +362,7 @@ int main(int argc, char** argv)
 					pl.step();
 				break;
 			case '\b':
+			case 'b':
 				pl.stepBack();
 				break;
 			case 's':

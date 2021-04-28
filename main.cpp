@@ -236,22 +236,13 @@ int playlist::comms[2] = { 0, 0 };
 
 int main(int argc, char** argv)
 {
-	std::string filename;
-
-	for (char c; (c=getopt(argc, argv, "p:")) != -1; )
+	if (argc != 2)
 	{
-		switch (c)
-		{
-		case 'p':
-			filename = optarg;
-			break;
-		case '?':
-			return 1;
-		}
+		std::cerr << "Usage: " << argv[0] << " <playlist>\n";
+		return 1;
 	}
 
-	
-	playlist pl{filename};
+	playlist pl{argv[1]};
 
 	size_t columnWidth = 0;
 	for (auto& s : pl.registeredNames())

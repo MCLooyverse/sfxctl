@@ -2,7 +2,6 @@
 #include <thread>
 #include <iostream>
 #include <signal.h>
-#include <concepts>
 #include <utility>
 #include <cstring>
 #include <poll.h>
@@ -77,6 +76,8 @@ public:
 				"Failed to open \"" + filename + "\""
 			};
 
+		fs::current_path(fs::path(filename).parent_path());
+
 		std::string errstr{""};
 		for (std::string line; getline(f, line), f; )
 		{
@@ -104,7 +105,7 @@ public:
 				ins.push_back({inst::play, {}});
 				for (int i = 1; i < tok.size(); i++)
 				{
-					if (paths.contains(tok[i]))
+					if (paths.count(tok[i]))
 						ins.back().args.push_back(tok[i]);
 					else
 						errstr += "Name \"" + tok[i] + "\" has not been defined\n";
@@ -115,7 +116,7 @@ public:
 				ins.push_back({inst::start, {}});
 				for (int i = 1; i < tok.size(); i++)
 				{
-					if (paths.contains(tok[i]))
+					if (paths.count(tok[i]))
 						ins.back().args.push_back(tok[i]);
 					else
 						errstr += "Name \"" + tok[i] + "\" has not been defined\n";
@@ -126,7 +127,7 @@ public:
 				ins.push_back({inst::end, {}});
 				for (int i = 1; i < tok.size(); i++)
 				{
-					if (paths.contains(tok[i]))
+					if (paths.count(tok[i]))
 						ins.back().args.push_back(tok[i]);
 					else
 						errstr += "Name \"" + tok[i] + "\" has not been defined\n";

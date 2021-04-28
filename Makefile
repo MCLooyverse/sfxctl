@@ -4,4 +4,4 @@ sfxctl : main.o
 	g++ -o sfxctl main.o
 
 main.o : main.cpp
-	g++ -c main.cpp --std=c++20 -I $(mclLoc)
+	g++ -c main.cpp --std=c++17 -I $(mclLoc)

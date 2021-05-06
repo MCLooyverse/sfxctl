@@ -155,7 +155,7 @@ public:
 			for (const std::string& s : ins[isp].args)
 			for (auto& p : playing)
 			{
-				if (p.second && p.first == s)
+				if (p.second > 0 && p.first == s)
 				{
 					kill(p.second, SIGTERM);
 					break;
@@ -172,6 +172,16 @@ public:
 	void skip()
 	{
 		++isp;
+	}
+	void restart()
+	{
+		for (auto& p : playing)
+		{
+			if (p.second > 0)
+				kill(p.second, SIGTERM);
+		}
+		playing.resize(0);
+		isp = 0;
 	}
 
 
@@ -354,10 +364,16 @@ int main(int argc, char** argv)
 				break;
 			case '\b':
 			case 'b':
+			case 'k':
 				pl.stepBack();
 				break;
 			case 's':
+			case 'j':
 				pl.skip();
+				break;
+			case 'r':
+				pl.restart();
+				break;
 			default:
 				break;
 			}
